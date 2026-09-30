@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anshuv Debnath</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #1a7a4a;
+      --green-dark: #145c38;
+      --green-light: #22a060;
+      --pixel: #c8f0a0;
+      --pixel-dim: #7abf78;
+      --bg: #0f4f2e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--green);
+      color: var(--pixel);
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+    }
+
+    .pixel-text {
+      font-family: 'Press Start 2P', monospace;
+      color: var(--pixel);
+      text-shadow: 2px 2px 0 var(--green-dark), 4px 4px 0 rgba(0,0,0,0.3);
+      letter-spacing: 2px;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: var(--green-dark) !important;
+      border-bottom: 3px solid var(--pixel-dim);
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .navbar-brand {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px;
+      color: var(--pixel) !important;
+      text-shadow: 2px 2px 0 var(--green-dark);
+    }
+    .navbar-toggler { border: 2px solid var(--pixel-dim); border-radius: 0; }
+    .navbar-toggler-icon { filter: invert(80%) sepia(30%) saturate(200%) hue-rotate(80deg); }
+    .nav-link {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      color: var(--pixel-dim) !important;
+      padding: 8px 10px !important;
+      letter-spacing: 1px;
+      transition: all 0.15s;
+      border: 2px solid transparent;
+      border-radius: 0;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--pixel) !important;
+      background: var(--green-light) !important;
+      border: 2px solid var(--pixel);
+      border-radius: 0 !important;
+    }
+
+    /* ── HERO ── */
+    #home { background: var(--green); padding: 60px 20px 40px; text-align: center; }
+    .hero-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(22px, 6vw, 42px);
+      color: var(--pixel);
+      text-shadow: 3px 3px 0 var(--green-dark), 6px 6px 0 rgba(0,0,0,0.25);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .hero-sub { font-family: 'VT323', monospace; font-size: 26px; color: var(--pixel-dim); margin-bottom: 24px; }
+    .pixel-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      color: var(--green-dark);
+      background: var(--pixel);
+      border: none;
+      padding: 12px 24px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--green-dark);
+      transition: all 0.1s;
+      display: inline-block;
+      text-decoration: none;
+      margin: 4px;
+    }
+    .pixel-btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--green-dark);
+      color: var(--green-dark);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 60px 20px; scroll-margin-top: 70px; }
+    .section-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(14px, 3.5vw, 22px);
+      color: var(--pixel);
+      text-shadow: 3px 3px 0 var(--green-dark);
+      margin-bottom: 8px;
+    }
+    .section-underline {
+      height: 3px;
+      background: repeating-linear-gradient(90deg, var(--pixel) 0px, var(--pixel) 8px, transparent 8px, transparent 14px);
+      margin-bottom: 40px;
+    }
+
+    /* ── PIXEL CARD ── */
+    .pixel-card {
+      background: var(--green-dark);
+      border: 3px solid var(--pixel-dim);
+      border-radius: 0;
+      padding: 24px;
+      margin-bottom: 28px;
+      position: relative;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .pixel-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 rgba(0,0,0,0.35); }
+    .pixel-card::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: -4px; bottom: -4px;
+      border: 2px solid rgba(200,240,160,0.1);
+      pointer-events: none;
+    }
+
+    .card-num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      background: var(--pixel);
+      color: var(--green-dark);
+      padding: 4px 10px;
+      display: inline-block;
+      margin-bottom: 14px;
+      box-shadow: 2px 2px 0 var(--green-dark);
+    }
+
+    .card-degree {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(10px, 2.5vw, 14px);
+      color: var(--pixel);
+      margin-bottom: 6px;
+      line-height: 1.6;
+    }
+    .card-degree span { color: #ffe080; }
+
+    .grade-box {
+      float: right;
+      background: var(--green-light);
+      border: 3px solid var(--pixel);
+      padding: 10px 16px;
+      text-align: center;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+      margin: 0 0 10px 16px;
+    }
+    .grade-val { font-family: 'Press Start 2P', monospace; font-size: 20px; color: #ffe080; display: block; line-height: 1; }
+    .grade-lbl { font-family: 'VT323', monospace; font-size: 16px; color: var(--pixel-dim); display: block; margin-top: 4px; }
+
+    .status-tag { font-family: 'VT323', monospace; font-size: 18px; padding: 3px 12px; margin-bottom: 16px; display: inline-block; }
+    .status-tag.ongoing { background: #ffe080; color: var(--green-dark); }
+    .status-tag.done { background: var(--pixel-dim); color: var(--green-dark); }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; clear: both; }
+    .chip {
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      background: var(--green);
+      border: 2px solid var(--pixel-dim);
+      color: var(--pixel);
+      padding: 4px 12px;
+    }
+
+    .pixel-divider {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: var(--pixel-dim);
+      margin: 16px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pixel-divider::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--pixel-dim) 0, var(--pixel-dim) 4px, transparent 4px, transparent 8px);
+    }
+
+    .tags-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      border: 2px solid var(--pixel-dim);
+      color: var(--pixel);
+      padding: 4px 12px;
+      background: transparent;
+      cursor: default;
+      transition: all 0.12s;
+    }
+    .tag:hover { background: var(--pixel); color: var(--green-dark); border-color: var(--pixel); }
+
+    .pixel-blurb {
+      background: rgba(200,240,160,0.07);
+      border-left: 4px solid #ffe080;
+      padding: 12px 16px;
+      margin-top: 18px;
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      color: var(--pixel-dim);
+      line-height: 1.5;
+    }
+    .pixel-blurb strong { color: var(--pixel); }
+
+    /* ── PROFILE ── */
+    #profile { background: var(--bg); }
+    .profile-box {
+      background: var(--green-dark);
+      border: 3px solid var(--pixel-dim);
+      padding: 28px;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.4);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .profile-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(14px, 4vw, 22px);
+      color: var(--pixel);
+      text-shadow: 3px 3px 0 var(--green-dark);
+      margin-bottom: 16px;
+    }
+    .profile-line { font-family: 'VT323', monospace; font-size: 22px; color: var(--pixel-dim); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .profile-line span { color: var(--pixel); }
+    .pixel-cursor { display: inline-block; width: 10px; height: 20px; background: var(--pixel); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 4px; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── SKILLS GRID ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .skill-category {
+      background: var(--green-dark);
+      border: 3px solid var(--pixel-dim);
+      padding: 18px;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .skill-category:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 rgba(0,0,0,0.3); }
+    .skill-cat-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: #ffe080;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed var(--pixel-dim);
+    }
+    .skill-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+
+    /* ── ACHIEVEMENTS ── */
+    #achievements { background: var(--bg); }
+    .achievement-item {
+      background: var(--green-dark);
+      border: 3px solid var(--pixel-dim);
+      border-left: 6px solid #ffe080;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .achievement-item:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 rgba(0,0,0,0.3); }
+    .achievement-rank {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      background: #ffe080;
+      color: var(--green-dark);
+      padding: 4px 10px;
+      display: inline-block;
+      margin-bottom: 12px;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    }
+    .achievement-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(9px, 2vw, 12px);
+      color: var(--pixel);
+      margin-bottom: 10px;
+      line-height: 1.8;
+    }
+    .achievement-desc { font-family: 'VT323', monospace; font-size: 20px; color: var(--pixel-dim); line-height: 1.4; }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--green); }
+    .project-card {
+      background: var(--green-dark);
+      border: 3px solid var(--pixel-dim);
+      padding: 24px;
+      margin-bottom: 28px;
+      position: relative;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .project-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 rgba(0,0,0,0.35); }
+    .project-num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      background: var(--green-light);
+      color: var(--pixel);
+      padding: 4px 10px;
+      display: inline-block;
+      margin-bottom: 14px;
+      box-shadow: 2px 2px 0 var(--green-dark);
+      border: 2px solid var(--pixel-dim);
+    }
+    .project-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(11px, 3vw, 16px);
+      color: #ffe080;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .project-subtitle { font-family: 'VT323', monospace; font-size: 20px; color: var(--pixel-dim); margin-bottom: 14px; }
+    .feature-list { list-style: none; padding: 0; margin-top: 12px; }
+    .feature-list li {
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      color: var(--pixel-dim);
+      padding: 5px 0;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .feature-list li::before { content: '▶'; position: absolute; left: 0; color: #ffe080; font-size: 14px; top: 7px; }
+    .feature-list li strong { color: var(--pixel); }
+
+    /* ── CERTIFICATIONS ── */
+    #certifications { background: var(--bg); }
+    .cert-card {
+      background: var(--green-dark);
+      border: 3px solid var(--pixel-dim);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .cert-card:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 rgba(0,0,0,0.3); }
+    .cert-num-box {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 14px;
+      background: var(--pixel);
+      color: var(--green-dark);
+      padding: 10px 14px;
+      min-width: 50px;
+      text-align: center;
+      box-shadow: 3px 3px 0 var(--green-dark);
+      flex-shrink: 0;
+    }
+    .cert-body { flex: 1; }
+    .cert-platform {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: #ffe080;
+      margin-bottom: 8px;
+    }
+    .cert-title { font-family: 'VT323', monospace; font-size: 22px; color: var(--pixel); margin-bottom: 4px; line-height: 1.3; }
+    .cert-instructor { font-family: 'VT323', monospace; font-size: 18px; color: var(--pixel-dim); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-dark);
+      border-top: 3px solid var(--pixel-dim);
+      text-align: center;
+      padding: 24px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: var(--pixel-dim);
+      letter-spacing: 1px;
+    }
+
+    .navbar-collapse { background: var(--green-dark); }
+    @media (max-width: 767px) {
+      .navbar-collapse { padding: 10px; border-top: 2px solid var(--pixel-dim); }
+      .grade-box { float: none; margin: 0 0 14px; display: inline-block; }
+      .cert-card { flex-direction: column; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="80" tabindex="0">
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar navbar-expand-lg" id="mainNav">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#home">ANSHUV_</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+      <ul class="navbar-nav gap-1">
+        <li class="nav-item"><a class="nav-link active" href="#home">HOME</a></li>
+        <li class="nav-item"><a class="nav-link" href="#education">EDUCATION</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">SKILLS</a></li>
+        <li class="nav-item"><a class="nav-link" href="#achievements">ACHIVEMENTS</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">PROJECTS</a></li>
+        <li class="nav-item"><a class="nav-link" href="#certifications">CERTS</a></li>
+        <li class="nav-item"><a class="nav-link" href="#profile">PROFILE</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HOME / HERO ══ -->
+<section id="home" style="padding-top:70px; padding-bottom:50px; text-align:center;">
+  <div class="hero-title">Hello..!!</div>
+  <div class="hero-sub">I'm Anshuv Debnath</div>
+  <div class="hero-sub" style="font-size:22px; margin-bottom:32px;">
+    B.Tech CSE · Developer · Builder
+  </div>
+  <a href="#education" class="pixel-btn">VIEW EDUCATION ▼</a>
+  <a href="#projects" class="pixel-btn" style="background: var(--green-light); color: var(--pixel); border: 2px solid var(--pixel-dim);">MY PROJECTS ▼</a>
+</section>
+
+<!-- ══ EDUCATION ══ -->
+<section id="education" style="background: var(--bg);">
+  <div class="container">
+    <div class="section-title">EDUCATION</div>
+    <div class="section-underline"></div>
+
+    <!-- Card 01 — B.Tech -->
+    <div class="pixel-card">
+      <div class="clearfix">
+        <div class="grade-box">
+          <span class="grade-val">8.02</span>
+          <span class="grade-lbl">SGPA·Y1</span>
+        </div>
+        <div class="card-num">01 / UNDERGRADUATE</div>
+        <div class="card-degree">B.Tech <span>Core CSE</span></div>
+        <div class="status-tag ongoing">▶ ONGOING</div>
+      </div>
+      <div class="chip-row">
+        <div class="chip">🏛 Techno India University</div>
+        <div class="chip">📅 2025 – 2029</div>
+        <div class="chip">🎓 First Year · F1 Group A</div>
+        <div class="chip">🆔 251001001009</div>
+      </div>
+      <div class="pixel-divider">KEY LEARNINGS</div>
+      <div class="tags-wrap">
+        <div class="tag">C Programming</div>
+        <div class="tag">Intro to Linux OS</div>
+        <div class="tag">Data Science</div>
+        <div class="tag">Mathematics</div>
+        <div class="tag">Electronics</div>
+        <div class="tag">Electrical Engg</div>
+        <div class="tag">Engg Mechanics</div>
+      </div>
+      <div class="pixel-blurb">
+        🚀 <strong>Beyond class:</strong> Self-learning MERN Stack, Flutter & Digital Forensics/OSINT. Building <strong>StockBuddy</strong> — a hyperlocal B2B supply chain startup for Indian kirana stores.
+      </div>
+    </div>
+
+    <!-- Card 02 — Class XII -->
+    <div class="pixel-card">
+      <div class="clearfix">
+        <div class="grade-box" style="background:#7a3a1a; border-color:#e8845c;">
+          <span class="grade-val" style="color:#ffb080;">80%</span>
+          <span class="grade-lbl">GRADE</span>
+        </div>
+        <div class="card-num" style="background:#e8845c; color:#3a1a08;">02 / SENIOR SECONDARY</div>
+        <div class="card-degree">Class <span style="color:#ffb080;">XII</span> — CBSE Board</div>
+        <div class="status-tag done">✔ COMPLETED</div>
+      </div>
+      <div class="chip-row">
+        <div class="chip">🏫 Govt. Model Senior Secondary School</div>
+        <div class="chip">📋 CBSE Board</div>
+        <div class="chip">📊 Science — PCM</div>
+      </div>
+      <div class="pixel-divider">KEY LEARNINGS</div>
+      <div class="tags-wrap">
+        <div class="tag">Physics</div>
+        <div class="tag">Chemistry</div>
+        <div class="tag">Mathematics</div>
+        <div class="tag">Python Programming</div>
+        <div class="tag">DBMS</div>
+      </div>
+      <div class="pixel-blurb">
+        🧪 <strong>Foundation:</strong> Deep core understanding of Physics, Chemistry & Mathematics — the bedrock for engineering-level concepts at university.
+      </div>
+    </div>
+
+    <!-- Card 03 — Class X -->
+    <div class="pixel-card">
+      <div class="clearfix">
+        <div class="grade-box" style="background:#0f3d25; border-color:#5abf80;">
+          <span class="grade-val" style="color:#80ffb0;">83%</span>
+          <span class="grade-lbl">GRADE</span>
+        </div>
+        <div class="card-num" style="background:#5abf80; color:#0a2a18;">03 / SECONDARY</div>
+        <div class="card-degree">Class <span style="color:#80ffb0;">X</span> — CBSE Board</div>
+        <div class="status-tag done">✔ COMPLETED</div>
+      </div>
+      <div class="chip-row">
+        <div class="chip">🏫 Sagritara School</div>
+        <div class="chip">📋 CBSE Board</div>
+      </div>
+      <div class="pixel-divider">KEY LEARNINGS</div>
+      <div class="tags-wrap">
+        <div class="tag">Core Science</div>
+        <div class="tag">Higher-Order Concepts</div>
+        <div class="tag">Social Science</div>
+        <div class="tag">Regional Languages</div>
+        <div class="tag">English Literature</div>
+        <div class="tag">Mathematics</div>
+      </div>
+      <div class="pixel-blurb">
+        🌱 <strong>Where it began:</strong> Built a multi-disciplinary base spanning science, social studies, regional languages (Bengali, Hindi) & mathematics.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TECHNICAL SKILLS ══ -->
+<section id="skills" style="background: var(--green);">
+  <div class="container">
+    <div class="section-title">TECH SKILLS</div>
+    <div class="section-underline"></div>
+    <div class="skills-grid">
+
+      <div class="skill-category">
+        <span class="skill-icon">💻</span>
+        <div class="skill-cat-title">PROG. LANGUAGES</div>
+        <div class="tags-wrap">
+          <div class="tag">C</div>
+          <div class="tag">JavaScript</div>
+          <div class="tag">Python</div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <span class="skill-icon">🎨</span>
+        <div class="skill-cat-title">FRONTEND</div>
+        <div class="tags-wrap">
+          <div class="tag">HTML</div>
+          <div class="tag">CSS</div>
+          <div class="tag">TypeScript</div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <span class="skill-icon">⚙️</span>
+        <div class="skill-cat-title">BACKEND</div>
+        <div class="tags-wrap">
+          <div class="tag">Node.js</div>
+          <div class="tag">DBMS</div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <span class="skill-icon">🛠️</span>
+        <div class="skill-cat-title">TOOLS &amp; PLATFORMS</div>
+        <div class="tags-wrap">
+          <div class="tag">Git</div>
+          <div class="tag">GitHub</div>
+          <div class="tag">VS Code</div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <span class="skill-icon">🎮</span>
+        <div class="skill-cat-title">OTHERS</div>
+        <div class="tags-wrap">
+          <div class="tag">GDevelop Game Engine</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ ACHIEVEMENTS ══ -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-title">ACHIEVEMENTS</div>
+    <div class="section-underline"></div>
+
+    <div class="achievement-item">
+      <div class="achievement-rank">🥈 RUNNER UP</div>
+      <div class="achievement-title">2ND PLACE — WEB REDESIGN CHALLENGE</div>
+      <div class="achievement-desc">Secured 2nd place in a web redesign competition organised by <strong style="color:var(--pixel);">GDG on Campus TIU</strong>. Competed against fellow students to redesign a real-world website with better UX and aesthetics.</div>
+    </div>
+
+    <div class="achievement-item" style="border-left-color: #80ffb0;">
+      <div class="achievement-rank" style="background: #80ffb0;">🏆 WINNER</div>
+      <div class="achievement-title">STATE-LEVEL DECLAMATION CONTEST — WINNER</div>
+      <div class="achievement-desc">Won a <strong style="color:var(--pixel);">State-Level Declamation Contest</strong>, showcasing strong public speaking, oratory, and argumentation skills at a competitive stage.</div>
+    </div>
+
+    <div class="achievement-item" style="border-left-color: #80c8ff;">
+      <div class="achievement-rank" style="background: #80c8ff;">🌏 INTERNATIONAL</div>
+      <div class="achievement-title">REPRESENTED INDIA — WTAD 2024 · KUMAMOTO, JAPAN</div>
+      <div class="achievement-desc">Selected to <strong style="color:var(--pixel);">represent India</strong> at the <strong style="color:var(--pixel);">High School Students Summit on WTAD 2024</strong>, held in Kumamoto, Japan — a prestigious international youth summit.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects" style="background: var(--bg);">
+  <div class="container">
+    <div class="section-title">PROJECTS</div>
+    <div class="section-underline"></div>
+
+    <!-- Project 01 — Ledger Flow -->
+    <div class="project-card">
+      <div class="project-num">01 / FINTECH</div>
+      <div class="project-title">LEDGER FLOW</div>
+      <div class="project-subtitle">Personal Expense Tracker Application</div>
+      <div class="chip-row">
+        <div class="chip">💰 Finance · Budgeting</div>
+        <div class="chip">📊 Real-time Analytics</div>
+      </div>
+      <ul class="feature-list">
+        <li><strong>Key Feature:</strong> Category-wise analytics with real-time balance calculations and transaction list</li>
+        <li>Tracks income and expenses with detailed breakdowns per category</li>
+        <li>Clean dashboard giving instant financial overview</li>
+      </ul>
+    </div>
+
+    <!-- Project 02 — Zustand -->
+    <div class="project-card">
+      <div class="project-num" style="background: transparent; border-color: #ffe080; color: #ffe080;">02 / STATE MGMT</div>
+      <div class="project-title">ZUSTAND ALTERNATIVE</div>
+      <div class="project-subtitle">Lightweight State Management Library</div>
+      <div class="chip-row">
+        <div class="chip">⚛️ React Ecosystem</div>
+        <div class="chip">🪶 Lightweight</div>
+      </div>
+      <ul class="feature-list">
+        <li><strong>Key Feature:</strong> Added Zustand — a lightweight state management library as an <strong>alternative to Redux</strong></li>
+        <li>Simplified global state management with minimal boilerplate</li>
+        <li>Designed for cleaner and more maintainable React codebases</li>
+      </ul>
+    </div>
+
+    <!-- Project 03 — ProResume -->
+    <div class="project-card">
+      <div class="project-num" style="background: transparent; border-color: #80c8ff; color: #80c8ff;">03 / PRODUCTIVITY</div>
+      <div class="project-title">PRORESUME</div>
+      <div class="project-subtitle">Schema-Driven CV Composer with Modular Templates</div>
+      <div class="chip-row">
+        <div class="chip">📄 Resume Builder</div>
+        <div class="chip">🗄️ NoSQL Backend</div>
+        <div class="chip">🤖 ATS Optimized</div>
+      </div>
+      <ul class="feature-list">
+        <li>Built a <strong>reusable, customizable CV template system</strong> with modular design patterns</li>
+        <li><strong>NoSQL</strong> database with <strong>ATS score integration</strong> to help users optimize their resume for applicant tracking systems</li>
+        <li>Schema-driven approach enables flexible template switching without data loss</li>
+      </ul>
+    </div>
+
+    <!-- Project 04 — StockBuddy -->
+    <div class="project-card">
+      <div class="project-num" style="background: transparent; border-color: var(--pixel); color: var(--pixel);">04 / STARTUP</div>
+      <div class="project-title">STOCKBUDDY</div>
+      <div class="project-subtitle">Hyperlocal B2B Supply Chain for Indian Kirana Stores</div>
+      <div class="chip-row">
+        <div class="chip">🏪 Kirana · Retail</div>
+        <div class="chip">🚚 B2B Supply Chain</div>
+        <div class="chip">▶ ONGOING</div>
+      </div>
+      <ul class="feature-list">
+        <li>Connecting local kirana stores directly with distributors to cut middlemen costs</li>
+        <li>Hyperlocal inventory and supply chain management built for Bharat</li>
+        <li>Startup project currently in active development</li>
+      </ul>
+    </div>
+    
+    <!-- Portfolio Website -->
+<div class="project-card">
+  <div class="project-num">0X / PERSONAL PROJECT</div>
+  <div class="project-title">PIXEL PORTFOLIO</div>
+  <div class="project-subtitle">Personal Developer Portfolio Website — the one you're looking at right now 👾</div>
+  <div class="tags-wrap">
+    <div class="tag">HTML</div>
+    <div class="tag">CSS</div>
+    <div class="tag">JavaScript</div>
+    <div class="tag">Bootstrap 5</div>
+    <div class="tag">Google Fonts</div>
+  </div>
+  <ul class="feature-list">
+    <li><strong>Retro pixel-art theme</strong> built from scratch using Press Start 2P & VT323 fonts</li>
+    <li><strong>Fully responsive</strong> — mobile-first layout with Bootstrap grid & custom media queries</li>
+    <li>Smooth <strong>scroll-spy navbar</strong> with active state highlighting across all sections</li>
+    <li><strong>Pixel hover animations</strong> — cards lift with offset box-shadow on interaction</li>
+    <li>Sections: Education, Skills, Achievements, Projects, Certifications & Profile</li>
+  </ul>
+  <div class="pixel-blurb">
+    🎮 <strong>Meta moment:</strong> This portfolio is itself a project — designed and coded entirely by Anshuv as a first-year CSE student.
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- ══ CERTIFICATIONS ══ -->
+<section id="certifications" style="background: var(--green);">
+  <div class="container">
+    <div class="section-title">CERTIFICATIONS</div>
+    <div class="section-underline"></div>
+
+    <div class="cert-card">
+      <div class="cert-num-box">01</div>
+      <div class="cert-body">
+        <div class="cert-platform">🎓 UDEMY</div>
+        <div class="cert-title">Full Stack Web Development (MERN)</div>
+        <div class="cert-instructor">👨‍💻 by Manik (CloudAffle)</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-num-box" style="background:#ffe080; color: var(--green-dark);">02</div>
+      <div class="cert-body">
+        <div class="cert-platform">🟢 GEEKSFORGEEKS</div>
+        <div class="cert-title">JavaScript for Beginners to Advance</div>
+        <div class="cert-instructor">👨‍💻 by Prakash Sakari</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-num-box" style="background:#ffe080; color: var(--green-dark);">03</div>
+      <div class="cert-body">
+        <div class="cert-platform">🟢 GEEKSFORGEEKS</div>
+        <div class="cert-title">21 Days, 21 MERN Projects</div>
+        <div class="cert-instructor">👨‍💻 by Vikas Sarthi</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-num-box">04</div>
+      <div class="cert-body">
+        <div class="cert-platform">🎓 UDEMY</div>
+        <div class="cert-title">Fundamentals of C</div>
+        <div class="cert-instructor">👨‍💻 by Harris Ali Khan</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PROFILE ══ -->
+<section id="profile" style="background: var(--bg);">
+  <div class="container">
+    <div class="section-title">PROFILE...</div>
+    <div class="section-underline"></div>
+    <div class="profile-box">
+      <div class="profile-name">Anshuv Debnath<span class="pixel-cursor"></span></div>
+      <div class="profile-line">📞 <span>+91 9474208838</span></div>
+      <div class="profile-line">✉️ <span>anshuv.debnath@gmail.com</span></div>
+      <div class="profile-line">📍 <span>Salt Lake, Kolkata, West Bengal</span></div>
+      <div class="profile-line">🎯 <span>CSE Student · MERN · Flutter · Startup Builder</span></div>
+      <div class="profile-line">⚔️ <span>Digital Forensics · OSINT · Game Dev</span></div>
+      <div style="margin-top:22px;">
+        <a href="#home" class="pixel-btn" style="font-size:9px;">BACK TO TOP ▲</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  © 2025 ANSHUV DEBNATH · BUILT WITH BOOTSTRAP + PIXEL LOVE
+</footer>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
